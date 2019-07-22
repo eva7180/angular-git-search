@@ -1,5 +1,6 @@
+<h1>{{title}} - {{displayQuery}} - Page {{pageNumber}}</h1>
 <input name="query" placeholder="Enter Search here" [(ngModel)]="searchQuery" />
-<button (click)="gitSearch()">Submit</button>
+<button (click)="sendQuery()">Submit</button>
 
 <div *ngIf="searchResults; else elseBlock">
   <h3 *ngIf="searchResults.total_count > 0; else noResults;" class="total">Total Results: {{ searchResults.total_count }}</h3>
@@ -15,7 +16,10 @@
       <p>Created on: {{ result.created_at | date:'fullDate' }}</p>
     </li>
   </ul>
+  <button *ngIf="pageNum > 1;" (click)="prevPage()">Previous Page</button>
+  <button (click)="nextPage()">Next Page</button>
 </div>
+
 <ng-template #elseBlock>Loading...</ng-template>
 <ng-template #noResults>
   <h3>There are no repositories for the search term {{ searchQuery }} </h3>

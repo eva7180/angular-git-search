@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { GitSearchService } from '../git-search.service';
 import { GitUsers } from '../git-users';
 
@@ -10,23 +11,38 @@ import { GitUsers } from '../git-users';
 export class GitUserSearchComponent implements OnInit {
   searchResults: GitUsers;
   searchQuery: string;
-
-  constructor(private GitSearchService: GitSearchService) { }
+  title: string;
+  displayQuery: string;
+  constructor(
+    private GitSearchService: GitSearchService, 
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.GitSearchService.gitUsers('tom').then( (response) => {
+    this.route.paramMap.subscribe( (params: ParamMap) => {
+      this.searchQuery = params.get('query');
+      this.displayQuery = params.get('query');
+      this.userSearch();   
+    })
+
+    this.route.data.subscribe( (result) => {
+      this.title = result.title
+    });
+
+  }
+
+  userSearch =  () => {
+    this.GitSearchService.gitUsers(this.searchQuery).then( (response) => {
       this.searchResults = response;
     }, (error) => {
       alert("Error: " + error.statusText)
     })
   }
 
-  userSearch =  (query: string) => {
-    this.GitSearchService.gitUsers(this.searchQuery).then( (response) => {
-      this.searchResults = response;
-    }, (error) => {
-      alert("Error: " + error.statusText)
-    })
+  sendQuery = () => {
+    this.searchResults = null;
+    this.router.navigate(['/user-search/' + this.searchQuery])
   }
 
 }
