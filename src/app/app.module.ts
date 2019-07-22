@@ -6,11 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { GitSearchService } from './git-search.service';
 import { GitSearchComponent } from './git-search/git-search.component';
+import { GitUserSearchComponent } from './git-user-search/git-user-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GitSearchComponent
+    GitSearchComponent,
+    GitUserSearchComponent
   ],
   imports: [
     BrowserModule,

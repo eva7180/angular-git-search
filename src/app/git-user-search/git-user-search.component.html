@@ -1,0 +1,15 @@
+<input name="query" placeholder="Enter Search here" [(ngModel)]="searchQuery" />
+<button (click)="userSearch()">Submit</button>
+
+<div *ngIf="searchResults;">
+  <h3>I found these GitHub Users (Total: {{ searchResults.total_count }}):</h3>
+  <ul class="list">
+    <li *ngFor="let user of searchResults.items;" class="list_item">
+      <a [href]="user.html_url">
+        <img [src]="user.avatar_url" class="avatar"/>
+        <h4 class="title">{{ user.login }}</h4>
+      </a>
+      <p class="description">Score: {{ user.score | number: '1.1-2' }}</p>
+    </li>
+  </ul>
+</div>
